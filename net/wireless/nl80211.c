@@ -13455,9 +13455,13 @@ void nl80211_send_connect_result(struct cfg80211_registered_device *rdev,
 	struct sk_buff *msg;
 	void *hdr;
 
+<<<<<<< HEAD
 	msg = nlmsg_new(100 + cr->req_ie_len + cr->resp_ie_len +
 			cr->fils_kek_len + cr->pmk_len +
 			(cr->pmkid ? WLAN_PMKID_LEN : 0), gfp);
+=======
+	msg = nlmsg_new(100 + req_ie_len + resp_ie_len, gfp);
+>>>>>>> v4.9.183
 	if (!msg)
 		return;
 
@@ -13515,7 +13519,11 @@ void nl80211_send_roamed(struct cfg80211_registered_device *rdev,
 	void *hdr;
 	const u8 *bssid = info->bss ? info->bss->bssid : info->bssid;
 
+<<<<<<< HEAD
 	msg = nlmsg_new(100 + info->req_ie_len + info->resp_ie_len, gfp);
+=======
+	msg = nlmsg_new(100 + req_ie_len + resp_ie_len, gfp);
+>>>>>>> v4.9.183
 	if (!msg)
 		return;
 
@@ -14397,6 +14405,11 @@ void cfg80211_ch_switch_notify(struct net_device *dev,
 
 	wdev->chandef = *chandef;
 	wdev->preset_chandef = *chandef;
+
+	if (wdev->iftype == NL80211_IFTYPE_STATION &&
+	    !WARN_ON(!wdev->current_bss))
+		wdev->current_bss->pub.channel = chandef->chan;
+
 	nl80211_ch_switch_notify(rdev, dev, chandef, GFP_KERNEL,
 				 NL80211_CMD_CH_SWITCH_NOTIFY, 0);
 }
@@ -14858,8 +14871,12 @@ void cfg80211_ft_event(struct net_device *netdev,
 	if (!ft_event->target_ap)
 		return;
 
+<<<<<<< HEAD
 	msg = nlmsg_new(100 + ft_event->ies_len + ft_event->ric_ies_len,
 			GFP_KERNEL);
+=======
+	msg = nlmsg_new(100 + ft_event->ric_ies_len, GFP_KERNEL);
+>>>>>>> v4.9.183
 	if (!msg)
 		return;
 

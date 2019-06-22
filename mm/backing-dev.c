@@ -690,6 +690,11 @@ static int cgwb_bdi_init(struct backing_dev_info *bdi)
 
 	INIT_RADIX_TREE(&bdi->cgwb_tree, GFP_ATOMIC);
 	bdi->cgwb_congested_tree = RB_ROOT;
+<<<<<<< HEAD
+=======
+	atomic_set(&bdi->usage_cnt, 1);
+	init_rwsem(&bdi->wb_switch_rwsem);
+>>>>>>> v4.9.183
 
 	ret = wb_init(&bdi->wb, bdi, 1, GFP_KERNEL);
 	if (!ret) {

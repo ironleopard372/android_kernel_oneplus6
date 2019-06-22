@@ -202,6 +202,7 @@ static void msm_atomic_wait_for_commit_done(
 		kms->funcs->wait_for_crtc_commit_done(kms, crtc);
 
 		drm_crtc_vblank_put(crtc);
+<<<<<<< HEAD
 	}
 }
 
@@ -367,6 +368,8 @@ msm_crtc_set_mode(struct drm_device *dev, struct drm_atomic_state *old_state)
 			funcs->mode_set(encoder, mode, adjusted_mode);
 
 		drm_bridge_mode_set(encoder->bridge, mode, adjusted_mode);
+=======
+>>>>>>> v4.9.183
 	}
 }
 

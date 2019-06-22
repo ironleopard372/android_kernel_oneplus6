@@ -63,8 +63,14 @@ static void etm4_os_unlock(struct etmv4_drvdata *drvdata)
 
 static bool etm4_arch_supported(u8 arch)
 {
+<<<<<<< HEAD
 	switch (arch) {
 	case ETM_ARCH_MAJOR_V4:
+=======
+	/* Mask out the minor version number */
+	switch (arch & 0xf0) {
+	case ETM_ARCH_V4:
+>>>>>>> v4.9.183
 		break;
 	default:
 		return false;

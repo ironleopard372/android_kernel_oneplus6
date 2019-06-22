@@ -119,6 +119,7 @@ int __init arch_probe_nr_irqs(void)
 	return nr_irqs;
 }
 #endif
+<<<<<<< HEAD
 
 #ifdef CONFIG_HOTPLUG_CPU
 static bool migrate_one_irq(struct irq_desc *desc)
@@ -193,3 +194,5 @@ void migrate_irqs(void)
 	local_irq_restore(flags);
 }
 #endif /* CONFIG_HOTPLUG_CPU */
+=======
+>>>>>>> v4.9.183

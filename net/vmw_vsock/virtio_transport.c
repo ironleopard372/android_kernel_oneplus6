@@ -600,6 +600,7 @@ static int __init virtio_vsock_init(void)
 	if (!virtio_vsock_workqueue)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	ret = register_virtio_driver(&virtio_vsock_driver);
 	if (ret)
 		goto out_wq;
@@ -612,6 +613,20 @@ static int __init virtio_vsock_init(void)
 
 out_vdr:
 	unregister_virtio_driver(&virtio_vsock_driver);
+=======
+	ret = vsock_core_init(&virtio_transport.transport);
+	if (ret)
+		goto out_wq;
+
+	ret = register_virtio_driver(&virtio_vsock_driver);
+	if (ret)
+		goto out_vci;
+
+	return 0;
+
+out_vci:
+	vsock_core_exit();
+>>>>>>> v4.9.183
 out_wq:
 	destroy_workqueue(virtio_vsock_workqueue);
 	return ret;
@@ -622,6 +637,7 @@ static void __exit virtio_vsock_exit(void)
 {
 	vsock_core_exit();
 	unregister_virtio_driver(&virtio_vsock_driver);
+	vsock_core_exit();
 	destroy_workqueue(virtio_vsock_workqueue);
 }
 

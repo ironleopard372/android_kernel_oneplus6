@@ -679,10 +679,17 @@ static void msg_done_handler(struct ssif_info *ssif_info, int result,
 			result = -EIO;
 			if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
 				pr_info("Received middle message <31\n");
+<<<<<<< HEAD
 
 			goto continue_op;
 		}
 
+=======
+
+			goto continue_op;
+		}
+
+>>>>>>> v4.9.183
 		if (ssif_info->multi_len + len > IPMI_MAX_MSG_LENGTH) {
 			/* Received message too big, abort the operation. */
 			result = -E2BIG;
@@ -705,6 +712,10 @@ static void msg_done_handler(struct ssif_info *ssif_info, int result,
 			 * numbers start at zero for the second block,
 			 * but multi_pos starts at one, so the +1.
 			 */
+			if (ssif_info->ssif_debug & SSIF_DEBUG_MSG)
+				dev_dbg(&ssif_info->client->dev,
+					"Received message out of sequence, expected %u, got %u\n",
+					ssif_info->multi_pos - 1, blocknum);
 			result = -EIO;
 		} else {
 			ssif_inc_stat(ssif_info, received_message_parts);

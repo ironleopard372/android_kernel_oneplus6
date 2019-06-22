@@ -269,6 +269,7 @@ static unsigned int die_nest_count;
 
 static unsigned long oops_begin(void)
 {
+<<<<<<< HEAD
 	int cpu;
 	unsigned long flags;
 
@@ -285,6 +286,16 @@ static unsigned long oops_begin(void)
 	}
 	die_nest_count++;
 	die_owner = cpu;
+=======
+	struct thread_info *thread = current_thread_info();
+	int ret;
+	unsigned long flags;
+
+	raw_spin_lock_irqsave(&die_lock, flags);
+
+	oops_enter();
+
+>>>>>>> v4.9.183
 	console_verbose();
 	bust_spinlocks(1);
 	return flags;
@@ -298,18 +309,28 @@ static void oops_end(unsigned long flags, struct pt_regs *regs, int notify)
 	bust_spinlocks(0);
 	die_owner = -1;
 	add_taint(TAINT_DIE, LOCKDEP_NOW_UNRELIABLE);
+<<<<<<< HEAD
 	die_nest_count--;
 	if (!die_nest_count)
 		/* Nest count reaches zero, release the lock. */
 		arch_spin_unlock(&die_lock);
 	raw_local_irq_restore(flags);
+=======
+>>>>>>> v4.9.183
 	oops_exit();
 
 	if (in_interrupt())
 		panic("Fatal exception in interrupt");
 	if (panic_on_oops)
 		panic("Fatal exception");
+<<<<<<< HEAD
 	if (notify != NOTIFY_STOP)
+=======
+
+	raw_spin_unlock_irqrestore(&die_lock, flags);
+
+	if (ret != NOTIFY_STOP)
+>>>>>>> v4.9.183
 		do_exit(SIGSEGV);
 }
 

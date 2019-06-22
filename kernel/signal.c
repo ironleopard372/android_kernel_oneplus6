@@ -2282,6 +2282,11 @@ relock:
 	if (signal_group_exit(signal)) {
 		ksig->info.si_signo = signr = SIGKILL;
 		sigdelset(&current->pending.signal, SIGKILL);
+<<<<<<< HEAD
+=======
+		trace_signal_deliver(SIGKILL, SEND_SIG_NOINFO,
+				&sighand->action[SIGKILL - 1]);
+>>>>>>> v4.9.183
 		recalc_sigpending();
 		goto fatal;
 	}

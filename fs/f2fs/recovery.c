@@ -231,6 +231,7 @@ static void recover_inode(struct inode *inode, struct page *page)
 	else
 		name = F2FS_INODE(page)->i_name;
 
+<<<<<<< HEAD
 	f2fs_msg(inode->i_sb, KERN_NOTICE,
 		"recover_inode: ino = %x, name = %s, inline = %x",
 			ino_of_node(page), name, raw->i_inline);
@@ -238,6 +239,13 @@ static void recover_inode(struct inode *inode, struct page *page)
 
 static int find_fsync_dnodes(struct f2fs_sb_info *sbi, struct list_head *head,
 				bool check_only)
+=======
+	f2fs_msg(inode->i_sb, KERN_NOTICE, "recover_inode: ino = %x, name = %s",
+			ino_of_node(page), name);
+}
+
+static int find_fsync_dnodes(struct f2fs_sb_info *sbi, struct list_head *head)
+>>>>>>> v4.9.183
 {
 	struct curseg_info *curseg;
 	struct page *page = NULL;
@@ -267,10 +275,14 @@ static int find_fsync_dnodes(struct f2fs_sb_info *sbi, struct list_head *head,
 
 		entry = get_fsync_inode(head, ino_of_node(page));
 		if (!entry) {
+<<<<<<< HEAD
 			bool quota_inode = false;
 
 			if (!check_only &&
 					IS_INODE(page) && is_dent_dnode(page)) {
+=======
+			if (IS_INODE(page) && is_dent_dnode(page)) {
+>>>>>>> v4.9.183
 				err = recover_inode_page(sbi, page);
 				if (err)
 					break;
@@ -474,7 +486,15 @@ retry_dn:
 
 	get_node_info(sbi, dn.nid, &ni);
 	f2fs_bug_on(sbi, ni.ino != ino_of_node(page));
-	f2fs_bug_on(sbi, ofs_of_node(dn.node_page) != ofs_of_node(page));
+
+	if (ofs_of_node(dn.node_page) != ofs_of_node(page)) {
+		f2fs_msg(sbi->sb, KERN_WARNING,
+			"Inconsistent ofs_of_node, ino:%lu, ofs:%u, %u",
+			inode->i_ino, ofs_of_node(dn.node_page),
+			ofs_of_node(page));
+		err = -EFAULT;
+		goto err;
+	}
 
 	for (; start < end; start++, dn.ofs_in_node++) {
 		block_t src, dest;
