@@ -1,7 +1,7 @@
 VERSION = 4
 PATCHLEVEL = 9
 SUBLEVEL = 167
-EXTRAVERSION = -HolyDragon-v0.39
+EXTRAVERSION =
 NAME = Roaring Lionus
 
 # *DOCUMENTATION*
@@ -254,10 +254,11 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 # "make" in the configured kernel build directory always uses that.
 # Default value for CROSS_COMPILE is not to prefix executables
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
+MAINTREE	?= /root/Downloads/op6-NetHunter
 ARCH		?= $(SUBARCH)
 CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
-HDK		:= /home/holyangel/android/Toolchains/aarch64-cortex_a75-linux-android-gcc8.2/
-HDK_TC		:= /home/holyangel/android/Toolchains/aarch64-cortex_a75-linux-android-gcc8.2/bin/
+HDK		:= $(MAINTREE)/toolchain/aarch64-cortex_a75-linux-android/
+HDK_TC		:= $(MAINTREE)/toolchain/aarch64-cortex_a75-linux-android/bin/
 ARCH		:= arm64
 SUBARCH		:= arm64
 CROSS_COMPILE	:= $(HDK_TC)aarch64-cortex_a75-linux-android-

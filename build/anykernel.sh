@@ -5,7 +5,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=### HolyDragon Kernel for OnePlus 6/6T ###
+kernel.string=### NetHunter Kernel for OnePlus 6/6T ###
 do.devicecheck=1
 do.modules=0
 do.cleanup=1

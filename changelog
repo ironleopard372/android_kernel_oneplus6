@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # Exports
-dir=/home/holyangel/android/Kernels/sdm845/build
+#dir=$pwd/build
 
-export Changelog=$dir/Changelog.txt
+export Changelog=build/changelog.txt
 
 if [ -f $Changelog ];
 then
